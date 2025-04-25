@@ -13,3 +13,16 @@
     <% end %>
   </div>
 </div>
+
+<script>
+  function updateItem(itemId, completed) {
+    fetch(`categories/<%= category.id %>/items/${itemId}?hush_key=<%= @user.hush_key %>&completed=${completed}`, {
+      method: "PUT",
+      headers: {
+        "X-CSRF-Token": "<%= form_authenticity_token %>",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ completed })
+    })
+  }
+</script>

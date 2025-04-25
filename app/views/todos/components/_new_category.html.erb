@@ -1,16 +1,38 @@
 <div class="bg-white rounded-lg shadow-md p-4 mb-6">
   <div class="flex items-center">
-    <input type="text" placeholder="Take a note..." class="flex-grow text-lg focus:outline-none">
+    <input type="text" id="new-category-input" placeholder="Take a note..." class="flex-grow text-lg focus:outline-none">
     <div class="flex gap-3">
-      <button class="p-2">
+      <button class="p-2" onclick="createCategory();">
         <i data-lucide="check"></i>
-      </button>
-      <button class="p-2">
-        <i data-lucide="pencil"></i>
-      </button>
-      <button class="p-2">
-        <i data-lucide="image"></i>
       </button>
     </div>
   </div>
 </div>
+<%# TODO: turbo frame %>
+
+<script>
+  const input = document.getElementById("new-category-input")
+  function createCategory() {
+    const category = {
+      name: input.value
+    }
+    fetch("/categories?hush_key=<%= @user.hush_key %>", {
+      method: "POST",
+      headers: {
+        "X-CSRF-Token": "<%= form_authenticity_token %>",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(category)
+    }) 
+  }
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault()
+      createCategory();
+    }
+  })
+
+
+</script>
+
+<%# TODO: when pressing enter, add the category %>
