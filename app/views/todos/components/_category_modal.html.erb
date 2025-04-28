@@ -1,0 +1,36 @@
+<div id="categoryModal" class="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 hidden">
+  <div class="bg-white rounded-lg p-6 min-w-[300px]" onclick="event.stopPropagation()">
+    <h2 class="text-xl font-bold mb-4" id="categoryName"></h2>
+    <div class="space-y-2"  id="checkboxesForCategoryModal">
+      <!-- Checkboxes will be inserted here -->
+    </div>
+    <button class="mt-4 px-4 py-2 bg-emerald-200 rounded" onclick="closeCategoryModal()">Close</button>
+  </div>
+</div>
+
+<script>
+  function closeCategoryModal() {
+    document.getElementById('categoryModal').classList.add('hidden');
+  }
+  function openCategoryModal(event, id) {
+    if (event.target.tagName === 'INPUT') return;
+    const card = event.currentTarget;
+    const modal = document.getElementById('categoryModal');
+    const checkboxesToDuplicate = card.querySelector('.checkboxesToDuplicate');
+    const checkboxesForCategoryModal = document.getElementById('checkboxesForCategoryModal');
+    checkboxesForCategoryModal.innerHTML = checkboxesToDuplicate.innerHTML;
+    const categoryName = card.querySelector('h2').textContent;
+    document.getElementById('categoryName').textContent = categoryName;
+    if (modal) modal.classList.remove('hidden');
+  }
+  function updateItem(itemId, completed) {
+    fetch(`categories/<%= category.id %>/items/${itemId}?hush_key=<%= @user.hush_key %>&completed=${completed}`, {
+      method: "PUT",
+      headers: {
+        "X-CSRF-Token": "<%= form_authenticity_token %>",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ completed })
+    })
+  }
+</script>

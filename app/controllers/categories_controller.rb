@@ -4,7 +4,17 @@ class CategoriesController < ApplicationController
 
   def create
     @category = @user.categories.create(category_params)
-    render json: @category.to_json
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(
+          "categories",
+          partial: "todos/categories",
+          locals: { user: @user }
+        )
+      end
+      format.html { redirect_to todos_path }
+      format.json { render json: @category }
+    end
   end
 
   def update

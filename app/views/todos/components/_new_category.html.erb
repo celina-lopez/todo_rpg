@@ -1,38 +1,11 @@
 <div class="bg-white rounded-lg shadow-md p-4 mb-6">
-  <div class="flex items-center">
-    <input type="text" id="new-category-input" placeholder="Take a note..." class="flex-grow text-lg focus:outline-none">
+  <form action="/categories?hush_key=<%= @user.hush_key %>" method="post" data-turbo-frame="categories" class="flex items-center">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="text" name="category[name]" required placeholder="Take a note..." class="flex-grow text-lg focus:outline-none">
     <div class="flex gap-3">
-      <button class="p-2" onclick="createCategory();">
+      <button class="p-2" type="submit">
         <i data-lucide="check"></i>
       </button>
     </div>
-  </div>
+  </form>
 </div>
-<%# TODO: turbo frame %>
-
-<script>
-  const input = document.getElementById("new-category-input")
-  function createCategory() {
-    const category = {
-      name: input.value
-    }
-    fetch("/categories?hush_key=<%= @user.hush_key %>", {
-      method: "POST",
-      headers: {
-        "X-CSRF-Token": "<%= form_authenticity_token %>",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(category)
-    }) 
-  }
-  input.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault()
-      createCategory();
-    }
-  })
-
-
-</script>
-
-<%# TODO: when pressing enter, add the category %>
