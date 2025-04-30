@@ -1,9 +1,10 @@
 class CategoriesController < ApplicationController
   before_action :set_user
-  before_action :set_category, only: [ :update, :destroy ]
+  before_action :set_category
+  before_action :set_item
 
   def create
-    @category = @user.categories.create(category_params)
+    @items = @category.items.create(items_params)
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
@@ -13,27 +14,30 @@ class CategoriesController < ApplicationController
         )
       end
       format.html { redirect_to todos_path }
-      format.json { render json: @category }
+      format.json { render json: @item }
     end
   end
 
   def update
-    @category.update(category_params)
-    render json: @category.to_json
+    @item.update(items_params)
+    render json: @item.to_json
   end
 
   def destroy
-    @category.destroy
+    @item.destroy
     render json: { success: true }
   end
-
   private
 
   def set_category
-    @category = @user.categories.find(params[:id])
+    @category = @user.categories.find(params[:category_id])
   end
 
-  def category_params
-    params.require(:category).permit(:name)
+  def set_item
+    @item = @categories.find(params[:id])
+  end
+
+  def items_params
+    params.require(:items).permit(:name, :completed, :repeating)
   end
 end
