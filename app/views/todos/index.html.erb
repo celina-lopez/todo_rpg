@@ -11,3 +11,27 @@
 
   <%= render "todos/components/category_modal" %>
 </div>
+<script>
+  function updateItem(categoryId, itemId, completed) {
+    fetch(`categories/${categoryId}/items/${itemId}`, {
+      method: "PUT",
+      headers: {
+        "X-CSRF-Token": "<%= form_authenticity_token %>",
+        "Content-Type": "application/json",
+        "Turbo-Frame": "categories"
+      },
+      body: JSON.stringify({
+        item: {
+          completed: completed
+        },
+        hush_key: "<%= @user.hush_key %>"
+      })
+    }).then(response => response.json()).then(data => {
+      if (data.completed) {
+        document.getElementById(`task-${itemId}`).innerHTML = `<input type="checkbox" checked disabled onclick="updateItem(${itemId}, ${!data.completed})"> <span class="line-through">${data.name}</span>`;
+      } else {
+        document.getElementById(`task-${itemId}`).innerHTML = `<input type="checkbox" onclick="updateItem(${itemId}, ${!data.completed})"> <span>${data.name}</span>`;
+      }
+    })
+  }
+</script>

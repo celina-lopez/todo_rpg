@@ -1,4 +1,4 @@
-class CategoriesController < ApplicationController
+class ItemsController < ApplicationController
   before_action :set_user
   before_action :set_category
   before_action :set_item
@@ -34,10 +34,10 @@ class CategoriesController < ApplicationController
   end
 
   def set_item
-    @item = @categories.find(params[:id])
+    @item = @category.items.find(params[:id])
   end
 
   def items_params
-    params.require(:items).permit(:name, :completed, :repeating)
+    params.require(:item).permit(:name, :completed, :repeating)
   end
 end
