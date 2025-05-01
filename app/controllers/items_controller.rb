@@ -4,7 +4,7 @@ class ItemsController < ApplicationController
   before_action :set_item, only: [ :update, :destroy ]
 
   def create
-    @items = @category.items.create(items_params)
+    @item = @category.items.create(items_params)
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(

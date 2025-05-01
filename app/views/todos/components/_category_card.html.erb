@@ -1,4 +1,4 @@
-<div class="bg-emerald-100 rounded-lg p-4 cursor-pointer" onclick="openCategoryModal(event, <%= category.id %>)">
+<div class="bg-emerald-100 rounded-lg p-4 cursor-pointer" onclick="openCategoryModal(event, <%= category.id %>)" id="category-<%= category.id %>">
   <h2 class="text-xl font-bold mb-4"><%= category.name %></h2>
   <div class="space-y-2 checkboxesToDuplicate">
     <% category.items.incomplete.each do |item| %>

@@ -38,21 +38,28 @@
       name: document.getElementById('itemName').value,
       category_id: document.getElementById('categoryId').value
     }
-    fetch(`/categories/${item.category_id}/items?hush_key=<%= @user.hush_key %>`, {
+    fetch(`/categories/${item.category_id}/items`, {
       method: 'POST',
-      body: JSON.stringify({ item }),
+      body: JSON.stringify({ item, hush_key: "<%= @user.hush_key %>" }),
       headers: {
         'Content-Type': 'application/json',
         'X-CSRF-Token': "<%= form_authenticity_token %>",
-        'Turbo-Frame': 'categories'
+        'Accept': 'application/json'
       }
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
+    }).then(response => response.json()).then(data => {
+      const container = document.getElementById('checkboxesForCategoryModal')
+      const categoryId = document.getElementById('categoryId').value
+      const html = `
+        <div class="flex items-center gap-2 incompleteTask" id="task-${data.id}">
+          <input type="checkbox" onclick="updateItem(${categoryId}, ${data.id}, true)">
+          <span>${data.name}</span>
+        </div>
+      `
+      container.innerHTML += html
+      document.getElementById('itemName').value = ''
+      document.getElementById('category-' + categoryId).querySelector('.checkboxesToDuplicate').innerHTML += html
+    });
+
+
   }
 </script>
