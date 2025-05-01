@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   before_action :set_user
   before_action :set_category
-  before_action :set_item
+  before_action :set_item, only: [ :update, :destroy ]
 
   def create
     @items = @category.items.create(items_params)

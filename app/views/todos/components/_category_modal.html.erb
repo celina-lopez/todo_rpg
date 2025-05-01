@@ -4,6 +4,14 @@
     <div class="space-y-2"  id="checkboxesForCategoryModal">
       <!-- Checkboxes will be inserted here -->
     </div>
+      <input type="text" name="item[name]" required placeholder="New todo..." class="flex-grow text-lg focus:outline-none" id="itemName">
+      <input type="hidden" name="category_id" id="categoryId">
+      <div class="flex gap-3">
+        <button class="p-2" onclick="createItem()">
+          <i data-lucide="check"></i>
+        </button>
+      </div>
+    
     <button class="mt-4 px-4 py-2 bg-emerald-200 rounded" onclick="closeCategoryModal()">Close</button>
   </div>
 </div>
@@ -22,5 +30,29 @@
     const categoryName = card.querySelector('h2').textContent;
     document.getElementById('categoryName').textContent = categoryName;
     if (modal) modal.classList.remove('hidden');
+    document.getElementById('categoryId').value = id;
+  }
+
+  function createItem() {
+    const item = {
+      name: document.getElementById('itemName').value,
+      category_id: document.getElementById('categoryId').value
+    }
+    fetch(`/categories/${item.category_id}/items?hush_key=<%= @user.hush_key %>`, {
+      method: 'POST',
+      body: JSON.stringify({ item }),
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': "<%= form_authenticity_token %>",
+        'Turbo-Frame': 'categories'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
   }
 </script>
