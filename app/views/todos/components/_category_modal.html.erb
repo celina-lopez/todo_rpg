@@ -4,6 +4,10 @@
     <div class="space-y-2"  id="checkboxesForCategoryModal">
       <!-- Checkboxes will be inserted here -->
     </div>
+    <div class="flex items-center gap-2">
+      <div>
+        <input type="checkbox" checked disabled/> 
+      </div>
       <input type="text" name="item[name]" required placeholder="New todo..." class="flex-grow text-lg focus:outline-none" id="itemName">
       <input type="hidden" name="category_id" id="categoryId">
       <div class="flex gap-3">
@@ -11,6 +15,7 @@
           <i data-lucide="check"></i>
         </button>
       </div>
+    </div>
     
     <button class="mt-4 px-4 py-2 bg-emerald-200 rounded" onclick="closeCategoryModal()">Close</button>
   </div>

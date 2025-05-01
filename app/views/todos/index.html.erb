@@ -18,7 +18,7 @@
       headers: {
         "X-CSRF-Token": "<%= form_authenticity_token %>",
         "Content-Type": "application/json",
-        "Turbo-Frame": "categories"
+        "Accept": "application/json"
       },
       body: JSON.stringify({
         item: {
@@ -28,9 +28,9 @@
       })
     }).then(response => response.json()).then(data => {
       if (data.completed) {
-        document.getElementById(`task-${itemId}`).innerHTML = `<input type="checkbox" checked disabled onclick="updateItem(${itemId}, ${!data.completed})"> <span class="line-through">${data.name}</span>`;
+        document.getElementById(`task-${itemId}`).innerHTML = `<input type="checkbox" checked onclick="updateItem(${categoryId}, ${itemId}, ${!data.completed})"> <span class="line-through">${data.name}</span>`;
       } else {
-        document.getElementById(`task-${itemId}`).innerHTML = `<input type="checkbox" onclick="updateItem(${itemId}, ${!data.completed})"> <span>${data.name}</span>`;
+        document.getElementById(`task-${itemId}`).innerHTML = `<input type="checkbox" onclick="updateItem(${categoryId}, ${itemId}, ${!data.completed})"> <span>${data.name}</span>`;
       }
     })
   }

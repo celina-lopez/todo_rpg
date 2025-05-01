@@ -20,7 +20,7 @@ class ItemsController < ApplicationController
 
   def update
     @item.update(items_params)
-    render json: @item.to_json
+    render json: @item
   end
 
   def destroy
