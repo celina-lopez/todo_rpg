@@ -11,7 +11,8 @@ Rails.application.routes.draw do
   get "bedroom" => "pages#bedroom"
 
   resources :users, only: [ :create ] do
-    resources :rooms, only: [ :index ]
+    get "room" => "rooms#index"
+    resource :rooms, only: [ :edit, :update ]
   end
   resources :todos, only: [ :index ]
   resources :categories, only: [ :create, :update, :destroy ] do

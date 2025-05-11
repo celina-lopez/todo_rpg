@@ -1,0 +1,15 @@
+<%= form_with url: user_rooms_path(@user, @room), method: :patch do |f| %>
+  <%= f.hidden_field :hush_key, value: params[:hush_key] %>
+  <%= f.select :character, Room.characters.keys.map { |key| [key.humanize, key] }, { selected: @room.character } %>
+
+  <img src="/images/<%= @room.character %>/idle/0.png" class="my-4" id="character-image" width="32" height="32"/>
+  <%= f.submit "Save", class: "bg-blue-500 text-white px-4 py-2 rounded-md" %>
+<% end %>
+
+<script>
+  const character = document.getElementById('character');
+  const characterImage = document.getElementById('character-image');
+  character.addEventListener('change', () => {
+    characterImage.src = `/images/${character.value}/idle/0.png`;
+  });
+</script>
