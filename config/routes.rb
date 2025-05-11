@@ -8,7 +8,11 @@ Rails.application.routes.draw do
 
   root "pages#home"
 
-  resources :users
+  get "bedroom" => "pages#bedroom"
+
+  resources :users, only: [ :create ] do
+    resources :rooms, only: [ :index ]
+  end
   resources :todos, only: [ :index ]
   resources :categories, only: [ :create, :update, :destroy ] do
     resources :items, only: [ :create, :update, :destroy ]

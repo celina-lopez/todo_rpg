@@ -4,6 +4,7 @@
 #
 #  id         :bigint           not null, primary key
 #  character  :integer          default("girl"), not null
+#  level      :integer          default(0), not null
 #  theme      :integer          default("default"), not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null

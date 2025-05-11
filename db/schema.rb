@@ -45,6 +45,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_24_013042) do
     t.bigint "user_id", null: false
     t.integer "theme", default: 0, null: false
     t.integer "character", default: 0, null: false
+    t.integer "level", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_rooms_on_user_id"

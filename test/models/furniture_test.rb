@@ -4,7 +4,7 @@
 #
 #  id         :bigint           not null, primary key
 #  coordinate :integer          not null
-#  type       :integer          default(0)
+#  type       :integer          default("bed")
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  room_id    :bigint           not null
