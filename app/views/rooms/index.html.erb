@@ -1,8 +1,14 @@
-<div class="w-full justify-items-center relative">
-  <img src="/images/<%= @room.level %>.png" />
-  <img
-    src="/images/<%= @room.character %>/idle/0.png"
-    class="absolute top-[176px] left-[589px]"
-  />
-</div>
+  <h2 class="text-2xl font-bold mb-2 text-center">
+    <%= @user.name %>'s room 
+  </h2>
+  <p class="text-center mb-2">
+    <%= @room.level %>
+  </p>
+  <div class="w-full justify-items-center relative">
+    <img src="/images/<%= @room.level %>.png" />
+    <img
+      src="/images/<%= @room.character %>/idle/0.png"
+      class="absolute top-[176px] left-[589px]"
+    />
+  </div>
 

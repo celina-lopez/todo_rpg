@@ -43,4 +43,19 @@ class Room < ApplicationRecord
     female_cafe_maid: 17,
     male_traffic_cop: 18
   }
+
+  ROOM_PHRASES = [
+    "An empty room full of potential... and echoes.",
+    "A lonely chair appears… it’s shy but hopeful.",
+    "Table’s here! Chair has a new best friend.",
+    "A tiny rug tiptoes in. So soft, so sweet!",
+    "Potted pals join the party. It’s plantastic!",
+    "Lights on! This room’s glowing with charm.",
+    "A couch flops in and makes itself at home.",
+    "Books arrive! They whisper cozy stories.",
+    "A cuddly lamp adds mood. Very huggable vibes.",
+    "Wall art giggles—this place has style now!",
+    "Sparkles, pillows, and magic, oh my!",
+    "A fully snuggly, wonderfully wonky dream home!"
+  ]
 end
