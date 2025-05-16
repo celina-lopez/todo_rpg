@@ -1,0 +1,15 @@
+<h2 class="text-2xl font-bold mb-2">
+  Create your account 
+</h2>
+
+<p class="mb-2">
+  You'll be given a secret url that can be used to edit your TODO. Others wouldn't be able to edit unless they have that link. 
+</p>
+
+<%= form_with model: @user, url: users_path do |form| %>
+  <div class="form-group my-4">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+  <%= form.submit "Create", class: "btn btn-primary" %>
+<% end %>

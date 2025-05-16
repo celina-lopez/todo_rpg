@@ -4,7 +4,7 @@
   <p class="text-center mb-2">
     Level: <%= @room.level %>
     <br/>
-    <%= Room::POSITIVE_ROOM_PHRASES[@room.level] %>
+    <%= @room.phrase %>
   </p>
   <div class="w-full justify-items-center relative">
     <img src="/images/<%= @room.level %>.png" />

@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@tailwind daisyui;
 
 body {
   font-family: "VT323", monospace;

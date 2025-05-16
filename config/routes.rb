@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   get "bedroom" => "pages#bedroom"
 
-  resources :users, only: [ :create ] do
+  resources :users, only: [ :create, :new ] do
     get "room" => "rooms#index"
     resource :rooms, only: [ :edit, :update ]
   end

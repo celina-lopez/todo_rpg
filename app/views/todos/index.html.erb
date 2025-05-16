@@ -1,3 +1,11 @@
+<h2 class="text-2xl font-bold mb-2">
+  <%= @user.name %>'s TODOs
+</h2>
+<p class="mb-2">
+  You can add categories and items to your TODO. THIS IS A SECRET LINK!
+</p>
+<%= link_to "Public Room", user_room_path(@user), class: "btn btn-primary" %>
+<%= link_to "Edit Avatar", edit_user_rooms_path(@user, hush_key: params[:hush_key]), class: "btn btn-primary" %>
 <div>
   <%= render "todos/components/new_category" %>
 

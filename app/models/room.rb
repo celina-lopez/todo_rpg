@@ -75,12 +75,23 @@ class Room < ApplicationRecord
   ]
 
   def increment_level!(by = 1)
+    return if by.zero?
+
     self.level = [ level + by, 12 ].min
+    self.decreased_level = false
     save!
   end
 
   def decrement_level!(by = 1)
+    return if by.zero?
+
     self.level = [ level - by, 0 ].max
+    self.decreased_level = true
     save!
+  end
+
+  def phrase
+    phrases = decreased_level? ? NEGATIVE_ROOM_PHRASES : POSITIVE_ROOM_PHRASES
+    phrases[level]
   end
 end
