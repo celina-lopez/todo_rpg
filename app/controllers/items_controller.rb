@@ -20,6 +20,9 @@ class ItemsController < ApplicationController
 
   def update
     @item.update(items_params)
+    if @item.completed_previously_changed? && @item.completed?
+      @user.room.increment_level!
+    end
     render json: @item
   end
 

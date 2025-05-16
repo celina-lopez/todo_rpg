@@ -5,6 +5,7 @@ class CreateRooms < ActiveRecord::Migration[7.2]
       t.integer :theme, default: 0, null: false
       t.integer :character, default: 0, null: false
       t.integer :level, default: 0, null: false
+      t.boolean :decreased_level, default: false, null: false
       t.timestamps
     end
   end

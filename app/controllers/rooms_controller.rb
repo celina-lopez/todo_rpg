@@ -2,6 +2,8 @@ class RoomsController < ApplicationController
   before_action :set_user, :set_room
 
   def index
+    decrement_by = (Date.today - @room.updated_at.to_date).to_i
+    @room.decrement_level!(decrement_by)
   end
 
   def update

@@ -2,13 +2,14 @@
 #
 # Table name: rooms
 #
-#  id         :bigint           not null, primary key
-#  character  :integer          default("girl"), not null
-#  level      :integer          default(0), not null
-#  theme      :integer          default("default"), not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  user_id    :bigint           not null
+#  id              :bigint           not null, primary key
+#  character       :integer          default("female_youth"), not null
+#  decreased_level :boolean          default(FALSE), not null
+#  level           :integer          default(0), not null
+#  theme           :integer          default("default"), not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  user_id         :bigint           not null
 #
 # Indexes
 #

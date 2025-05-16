@@ -2,7 +2,9 @@
     <%= @user.name %>'s room 
   </h2>
   <p class="text-center mb-2">
-    <%= @room.level %>
+    Level: <%= @room.level %>
+    <br/>
+    <%= Room::POSITIVE_ROOM_PHRASES[@room.level] %>
   </p>
   <div class="w-full justify-items-center relative">
     <img src="/images/<%= @room.level %>.png" />
