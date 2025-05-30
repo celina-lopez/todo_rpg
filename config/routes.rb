@@ -16,6 +16,9 @@ Rails.application.routes.draw do
   end
   resources :todos, only: [ :index ]
   resources :categories, only: [ :create, :update, :destroy ] do
+    member do
+      post "clear_checked" => "categories#clear_checked"
+    end
     resources :items, only: [ :create, :update, :destroy ]
   end
 end

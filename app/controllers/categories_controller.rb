@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :set_user
-  before_action :set_category, only: [ :update, :destroy ]
+  before_action :set_category, only: [ :update, :destroy, :clear_checked ]
 
   def create
     @category = @user.categories.create(category_params)
@@ -14,6 +14,11 @@ class CategoriesController < ApplicationController
 
   def destroy
     @category.destroy
+    render_turbo_stream_response
+  end
+
+  def clear_checked
+    @category.items.completed.destroy_all
     render_turbo_stream_response
   end
 
