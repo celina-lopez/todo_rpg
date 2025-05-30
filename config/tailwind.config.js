@@ -23,5 +23,15 @@ module.exports = {
     require('@tailwindcss/typography'),
     require('@tailwindcss/container-queries'),
     daisyui,
-  ]
+  ],
+  safelist: [
+    "bg-[#cb4023]",
+    "bg-[#f48858]",
+    "bg-[#6dd2d9]",
+    "bg-[#3da566]",
+    "bg-[#81ade0]",
+    "bg-[#5bca84]",
+    "bg-[#ffcf1c]",
+    "bg-[#dca6bf]",
+  ],
 }

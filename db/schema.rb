@@ -17,6 +17,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_24_013042) do
   create_table "categories", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "name", null: false
+    t.integer "color", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_categories_on_user_id"

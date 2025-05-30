@@ -3,6 +3,7 @@
 # Table name: categories
 #
 #  id         :bigint           not null, primary key
+#  color      :integer          default(0), not null
 #  name       :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -16,4 +17,25 @@ class Category < ApplicationRecord
   belongs_to :user
   has_many :items, dependent: :destroy
   validates_presence_of :name
+  validates_presence_of :color
+  before_create :set_color
+
+  COLORS = [
+    "#cb4023",
+    "#f48858",
+    "#6dd2d9",
+    "#3da566",
+    "#81ade0",
+    "#5bca84",
+    "#ffcf1c",
+    "#dca6bf"
+  ]
+
+  def set_color
+    self.color = rand(COLORS.length)
+  end
+
+  def color_class
+    "bg-[#{COLORS[color]}]"
+  end
 end
