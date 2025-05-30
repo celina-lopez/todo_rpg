@@ -1,7 +1,7 @@
-<div class="bg-white rounded-lg shadow-md p-4 mb-6">
+<div class="bg-white rounded-lg shadow-md p-4 my-6">
   <form action="/categories?hush_key=<%= @user.hush_key %>" method="post" data-turbo-frame="categories" class="flex items-center">
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-    <input type="text" name="category[name]" required placeholder="Take a note..." class="flex-grow text-lg focus:outline-none">
+    <input type="text" name="category[name]" required placeholder="Take a note..." class="flex-grow text-lg focus:outline-none border-transparent rounded">
     <div class="flex gap-3">
       <button class="p-2" type="submit">
         <i data-lucide="check"></i>

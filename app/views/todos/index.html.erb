@@ -1,5 +1,5 @@
-<h2 class="text-2xl font-bold mb-2">
-  <%= @user.name %>'s TODOs
+<h2 class="text-2xl font-bold mb-2 flex">
+  <%= @user.name %>'s TODOs <%= image_tag "/images/#{@user.room.character}/idle/0.png", class: "w-10 h-10 rounded-full" %>
 </h2>
 <p class="mb-2">
   You can add categories and items to your TODO. THIS IS A SECRET LINK!
