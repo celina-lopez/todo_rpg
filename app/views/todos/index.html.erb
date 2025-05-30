@@ -42,4 +42,27 @@
       }
     })
   }
+
+  function updateCategoryColor(categoryId, colorIndex) {
+    fetch(`categories/${categoryId}`, {
+      method: "PUT",
+      headers: {
+        "X-CSRF-Token": "<%= form_authenticity_token %>",
+        "Content-Type": "application/json",
+        "Accept": "text/vnd.turbo-stream.html"
+      },
+      body: JSON.stringify({
+        category: {
+          color: colorIndex
+        },
+        hush_key: "<%= @user.hush_key %>"
+      })
+    }).then(response => response.text())
+      .then(html => {
+        Turbo.renderStreamMessage(html);
+        setTimeout(() => {
+          lucide.createIcons();
+        }, 100);
+      });
+  }
 </script>
