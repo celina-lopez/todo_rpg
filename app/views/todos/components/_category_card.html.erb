@@ -17,8 +17,8 @@
       <% end %>
     </div>
   </div>
-  <div class="flex gap-5 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-    <div class="dropdown">
+  <div class="flex gap-5 mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+    <div class="dropdown tooltip" data-tip="Change color">
       <label tabindex="0">
         <i data-lucide="palette" class="w-4 h-4"></i>
       </label>
@@ -34,7 +34,11 @@
         <% end %>
       </ul>
     </div>
-    <i data-lucide="trash" class="w-4 h-4 cursor-pointer" onclick="removeCategory(<%= category.id %>)"></i>
-    <i data-lucide="brush-cleaning" class="w-4 h-4 cursor-pointer" onclick="clearChecked(<%= category.id %>)"></i>
+    <div class="tooltip" data-tip="Delete category">
+      <i data-lucide="trash" class="w-4 h-4 cursor-pointer" onclick="removeCategory(<%= category.id %>)"></i>
+    </div>
+    <div class="tooltip" data-tip="Clear checked items">
+      <i data-lucide="brush-cleaning" class="w-4 h-4 cursor-pointer" onclick="clearChecked(<%= category.id %>)"></i>
+    </div>
   </div>
 </div>
