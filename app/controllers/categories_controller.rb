@@ -4,37 +4,17 @@ class CategoriesController < ApplicationController
 
   def create
     @category = @user.categories.create(category_params)
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.replace(
-          "categories",
-          partial: "todos/categories",
-          locals: { user: @user }
-        )
-      end
-      format.html { redirect_to todos_path }
-      format.json { render json: @category }
-    end
+    render_turbo_stream_response
   end
 
   def update
     @category.update(category_params)
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.replace(
-          "categories",
-          partial: "todos/categories",
-          locals: { user: @user }
-        )
-      end
-      format.html { redirect_to todos_path }
-      format.json { render json: @category }
-    end
+    render_turbo_stream_response
   end
 
   def destroy
     @category.destroy
-    render json: { success: true }
+    render_turbo_stream_response
   end
 
   private
@@ -45,5 +25,19 @@ class CategoriesController < ApplicationController
 
   def category_params
     params.require(:category).permit(:name, :color)
+  end
+
+  def render_turbo_stream_response
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(
+          "categories",
+          partial: "todos/categories",
+          locals: { user: @user }
+        )
+      end
+      format.html { redirect_to todos_path }
+      format.json { render json: { success: true } }
+    end
   end
 end
