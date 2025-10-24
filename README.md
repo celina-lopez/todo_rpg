@@ -1,3 +1,10 @@
-<div class="bg-dark w-100 h-100">
-Hello
-</div>
+# TODO RPG
+
+https://todorpg.playboard.games/
+
+## Setup
+
+- `bundle`
+- `nvm use 20`
+- `yarn install`
+- `rails db:setup`

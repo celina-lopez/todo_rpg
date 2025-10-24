@@ -4,6 +4,7 @@
 <p class="mb-2">
   You can add categories and items to your TODO. THIS IS A SECRET LINK!
 </p>
+<%# TODO: add alerts when getting furniture added or stolen %>
 <%= link_to "Public Room", user_room_path(@user), class: "btn btn-primary" %>
 <%= link_to "Edit Avatar", edit_user_rooms_path(@user, hush_key: params[:hush_key]), class: "btn btn-primary" %>
 <div>
@@ -20,6 +21,7 @@
 
 </div>
 <script>
+  // TODO: move to javascript controller
   function categoryFetch(path, method, body = {}) {
     body.hush_key = "<%= @user.hush_key %>";
     return fetch(path, {

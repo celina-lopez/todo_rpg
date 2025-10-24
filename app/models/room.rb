@@ -19,11 +19,11 @@ class Room < ApplicationRecord
   belongs_to :user
   has_many :furnitures, dependent: :destroy
 
-  enum theme: {
+  enum :theme, {
     default: 0
   }
 
-  enum character: {
+  enum :character, {
     female_youth: 0,
     witch: 1,
     female_baker: 2,

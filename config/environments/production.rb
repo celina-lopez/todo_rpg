@@ -42,7 +42,7 @@ Rails.application.configure do
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
   # config.action_cable.url = "wss://example.com/cable"
-  # config.action_cable.allowed_request_origins = [ "http://example.com", /http:\/\/example.*/ ]
+  config.action_cable.allowed_request_origins = [ /worthyofapenny/, /playboard.games/, "todorpg.playboard.games" ]
 
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
   # Can be used together with config.force_ssl for Strict-Transport-Security and secure cookies.
@@ -53,7 +53,6 @@ Rails.application.configure do
 
   # Skip http-to-https redirect for the default health check endpoint.
   # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
-  config.action_cable.allowed_request_origins = [ /worthyofapenny/, /playboard.games/, "todorpg.playboard.games" ]
 
   # Log to STDOUT by default
   config.logger = ActiveSupport::Logger.new(STDOUT)
