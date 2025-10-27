@@ -1,0 +1,154 @@
+{
+  "naked": {
+    "down": [0, 1, 2, 1],
+    "left": [12, 13, 14, 13],
+    "right": [24, 25, 26, 25],
+    "up": [36, 37, 38, 37],
+    "idle": [0],
+    "spriteSheetName": "/images/GK_Actor_3_transparent.png"
+  },
+  "female_cafe_maid": {
+    "down": [6, 7, 8, 7],
+    "left": [18, 19, 20, 19],
+    "right": [30, 31, 32, 31],
+    "up": [42, 43, 44, 43],
+    "idle": [6],
+    "spriteSheetName": "/images/GK_Actor_3_transparent.png"
+  },
+  "witch": {
+    "down": [3, 4, 5, 4],
+    "left": [15, 16, 17, 16],
+    "right": [27, 28, 29, 28],
+    "up": [39, 40, 41, 40],
+    "idle": [3],
+    "spriteSheetName": "/images/GK_Actor_3_transparent.png"
+  },
+  "gutty_chan": {
+    "down": [9, 10, 11, 10],
+    "left": [21, 22, 23, 22],
+    "right": [33, 34, 35, 34],
+    "up": [45, 46, 47, 46],
+    "idle": [10],
+    "spriteSheetName": "/images/GK_Actor_3_transparent.png"
+  },
+  "male_student": {
+    "down": [9, 10, 11, 10],
+    "left": [21, 22, 23, 22],
+    "right": [33, 34, 35, 34],
+    "up": [45, 46, 47, 46],
+    "idle": [10],
+    "spriteSheetName": "/images/GK_Actor_2_transparent.png"
+  },
+  "female_student": {
+    "down": [9, 10, 11, 10],
+    "left": [21, 22, 23, 22],
+    "right": [33, 34, 35, 34],
+    "up": [45, 46, 47, 46],
+    "idle": [10],
+    "spriteSheetName": "/images/GK_Actor_1_transparent.png"
+  },
+  "female_elder": {
+    "down": [3, 4, 5, 4],
+    "left": [15, 16, 17, 16],
+    "right": [27, 28, 29, 28],
+    "up": [39, 40, 41, 40],
+    "idle": [3],
+    "spriteSheetName": "/images/GK_Actor_1_transparent.png"
+  },
+  "male_punk": {
+    "down": [3, 4, 5, 4],
+    "left": [15, 16, 17, 16],
+    "right": [27, 28, 29, 28],
+    "up": [39, 40, 41, 40],
+    "idle": [3],
+    "spriteSheetName": "/images/GK_Actor_2_transparent.png"
+  },
+  "male_casual": {
+    "down": [0, 1, 2, 1],
+    "left": [12, 13, 14, 13],
+    "right": [24, 25, 26, 25],
+    "up": [36, 37, 38, 37],
+    "idle": [0],
+    "spriteSheetName": "/images/GK_Actor_2_transparent.png"
+  },
+  "female_baker": {
+    "down": [0, 1, 2, 1],
+    "left": [12, 13, 14, 13],
+    "right": [24, 25, 26, 25],
+    "up": [36, 37, 38, 37],
+    "idle": [0],
+    "spriteSheetName": "/images/GK_Actor_1_transparent.png"
+  },
+  "female_office_worker": {
+    "down": [6, 7, 8, 7],
+    "left": [18, 19, 20, 19],
+    "right": [30, 31, 32, 31],
+    "up": [42, 43, 44, 43],
+    "idle": [6],
+    "spriteSheetName": "/images/GK_Actor_1_transparent.png"
+  },
+  "female_trendy": {
+    "down": [48, 49, 50, 49],
+    "left": [60, 61, 62, 61],
+    "right": [72, 73, 74, 73],
+    "up": [84, 85, 86, 85],
+    "idle": [49],
+    "spriteSheetName": "/images/GK_Actor_1_transparent.png"
+  },
+  "male_traditional": {
+    "down": [48, 49, 50, 49],
+    "left": [60, 61, 62, 61],
+    "right": [72, 73, 74, 73],
+    "up": [84, 85, 86, 85],
+    "idle": [49],
+    "spriteSheetName": "/images/GK_Actor_2_transparent.png"
+  },
+  "female_youth": {
+    "down": [51, 52, 53, 52],
+    "left": [63, 64, 65, 64],
+    "right": [75, 76, 77, 76],
+    "up": [87, 88, 89, 88],
+    "idle": [52],
+    "spriteSheetName": "/images/GK_Actor_1_transparent.png"
+  },
+  "male_traffic_cop": {
+    "down": [51, 52, 53, 52],
+    "left": [63, 64, 65, 64],
+    "right": [75, 76, 77, 76],
+    "up": [87, 88, 89, 88],
+    "idle": [52],
+    "spriteSheetName": "/images/GK_Actor_2_transparent.png"
+  },
+  "male_business_man": {
+    "down": [54, 55, 56, 55],
+    "left": [66, 67, 68, 67],
+    "right": [78, 79, 80, 79],
+    "up": [90, 91, 92, 91],
+    "idle": [55],
+    "spriteSheetName": "/images/GK_Actor_1_transparent.png"
+  },
+  "male_youth": {
+    "down": [54, 55, 56, 55],
+    "left": [66, 67, 68, 67],
+    "right": [78, 79, 80, 79],
+    "up": [90, 91, 92, 91],
+    "idle": [55],
+    "spriteSheetName": "/images/GK_Actor_2_transparent.png"
+  },
+  "male_business_man_old": {
+    "down": [57, 58, 59, 58],
+    "left": [69, 70, 71, 70],
+    "right": [81, 82, 83, 82],
+    "up": [95, 96, 97, 96],
+    "idle": [58],
+    "spriteSheetName": "/images/GK_Actor_1_transparent.png"
+  },
+  "shibu_inu": {
+    "down": [57, 58, 59, 58],
+    "left": [69, 70, 71, 70],
+    "right": [81, 82, 83, 82],
+    "up": [95, 96, 97, 96],
+    "idle": [58],
+    "spriteSheetName": "/images/GK_Actor_2_transparent.png"
+  }
+}

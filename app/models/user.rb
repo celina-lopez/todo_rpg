@@ -2,9 +2,9 @@
 #
 # Table name: users
 #
-#  id         :bigint           not null, primary key
-#  hush_key   :string           not null
+#  id         :integer          not null, primary key
 #  name       :string           not null
+#  hush_key   :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
@@ -12,6 +12,7 @@
 #
 #  index_users_on_hush_key  (hush_key) UNIQUE
 #
+
 class User < ApplicationRecord
   has_one :room, dependent: :destroy
   has_many :categories, dependent: :destroy
