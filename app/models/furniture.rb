@@ -17,7 +17,7 @@ class Furniture < ApplicationRecord
   belongs_to :room
   validates_presence_of :coordinate
 
-  enum type: {
+  enum :type, {
     bed: 0
   }
 end
