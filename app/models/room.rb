@@ -95,4 +95,15 @@ class Room < ApplicationRecord
     phrases = decreased_level? ? NEGATIVE_ROOM_PHRASES : POSITIVE_ROOM_PHRASES
     phrases[level]
   end
+
+  def furniture_items
+    furnitures.pluck(:furniture_type, :coordinate_x, :coordinate_y, :id).map do |furniture|
+      {
+        type: furniture[0],
+        x: furniture[1],
+        y: furniture[2],
+        id: furniture[3]
+      }
+    end
+  end
 end

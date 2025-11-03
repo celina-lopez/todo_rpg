@@ -13,7 +13,8 @@
   const furnitureData = <%= raw @furniture.to_json %>;
   let gameHelper;
   window.onload = function() {
-    gameHelper = new window.GameHelpers.Game(characterSprite, furnitureData);
+    gameHelper = new window.GameHelpers.Game(characterSprite, furnitureData, <%= raw @room.furniture_items.to_json %>);
+    console.log(<%= raw @room.furniture_items.to_json %>);
   }
 
   var config = {
@@ -35,8 +36,7 @@
   function preload() {
     this.load.spritesheet('player', characterSprite.spriteSheetName, { frameWidth: 32, frameHeight: 32});
     this.load.spritesheet('furniture', '/images/MainTileMap.png', { frameWidth: 32, frameHeight: 32});
-    // this.load.image('background', `/images/<%= @room.level %>.png`);
-    this.load.image('background', `/images/10.png`);
+    this.load.image('background', `/images/<%= @room.level %>.png`);
   }
 
   var cursors, player;
@@ -53,6 +53,7 @@
     this.physics.add.existing(player);
 
     cursors = this.input.keyboard.createCursorKeys();
+    gameHelper.constructWorld(this);
   }
 
   function update() {

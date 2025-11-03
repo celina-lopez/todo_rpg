@@ -4,7 +4,6 @@ GameHelpers.Game = class {
   constructor(characterSprite, furnitureData, furnitureItems) {
     this.characterSprite = characterSprite;
     this.furnitureData = furnitureData;
-    this.userId = URLSearchParams(window.location.search).get('hush_key');
     this.furnitureItems = furnitureItems;
   }
 
@@ -21,7 +20,7 @@ GameHelpers.Game = class {
 
   constructWorld(thiz) {
     this.furnitureItems.forEach((item) => {
-      this.setFurniture(thiz, item.name, item.id, item.coordinate_x, item.coordinate_y);
+      this.setFurniture(thiz, item.type, item.id, item.x, item.y);
     });
   }
 
@@ -58,8 +57,9 @@ GameHelpers.Game = class {
       var xhr = new XMLHttpRequest();
       xhr.open("POST", `/user/${this.userId}/rooms/furnitures/${gameObject.getData('id')}`, true);
       xhr.setRequestHeader('Content-Type', 'application/json');
+      let params = new URLSearchParams(window.location.search);
       xhr.send(JSON.stringify({
-          hush_key: URLSearchParams(window.location.search).get('hush_key'),
+          hush_key: params.get('hush_key'),
           furniture: {
             coordinate_x: gameObject.x,
             coordinate_y: gameObject.y

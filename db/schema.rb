@@ -25,11 +25,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_30_181402) do
 
   create_table "furnitures", force: :cascade do |t|
     t.bigint "room_id", null: false
-    t.integer "type", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.float "coordinate_x", default: 0.0
-    t.float "coordinate_y", default: 0.0
+    t.integer "furniture_type", default: 0, null: false
+    t.float "coordinate_x", default: 0.0, null: false
+    t.float "coordinate_y", default: 0.0, null: false
     t.index ["room_id"], name: "index_furnitures_on_room_id"
   end
 
