@@ -1,10 +1,11 @@
 var GameHelpers = {};
 
 GameHelpers.Game = class {
-  constructor(characterSprite, furnitureData, furnitureItems) {
+  constructor(characterSprite, furnitureData, furnitureItems, debug = false) {
     this.characterSprite = characterSprite;
     this.furnitureData = furnitureData;
     this.furnitureItems = furnitureItems;
+    this.debug = debug;
   }
 
   walkAnimation(key, frames, thiz) {
@@ -19,6 +20,7 @@ GameHelpers.Game = class {
   }
 
   constructWorld(thiz) {
+    thiz.add.image(0, 0, 'background').setOrigin(0, 0);
     this.furnitureItems.forEach((item) => {
       this.setFurniture(thiz, item.type, item.id, item.x, item.y);
     });
@@ -42,22 +44,24 @@ GameHelpers.Game = class {
       x = 32;
     });
 
+    let params = new URLSearchParams(window.location.search);
     container.add(array);
-    const hitArea = new Phaser.Geom.Rectangle(startX, startY, maxX + 32, data.length * 32 + 32);
+    const hitArea = new Phaser.Geom.Rectangle(32 / 2, 32 / 2 + 16, maxX - 32, data.length * 32 - 16);
     container.setInteractive(hitArea, Phaser.Geom.Rectangle.Contains);
-    container.setSize(maxX, data.length * 32);
     container.setData('id', id);
     thiz.input.setDraggable(container);
     thiz.input.on('drag', (_pointer, gameObject, dragX, dragY) => {
-      // TODO: maybe it drags every 32px
+      console.log(dragX, dragY);
       gameObject.x = dragX;
       gameObject.y = dragY;
     });
-    thiz.input.on('dragend', (pointer, gameObject) => {
+    if (this.debug) {
+      thiz.input.enableDebug(container);
+    }
+    thiz.input.on('dragend', (_pointer, gameObject) => {
       var xhr = new XMLHttpRequest();
-      xhr.open("POST", `/user/${this.userId}/rooms/furnitures/${gameObject.getData('id')}`, true);
+      xhr.open("PATCH", `/furnitures/${gameObject.getData('id')}`, true);
       xhr.setRequestHeader('Content-Type', 'application/json');
-      let params = new URLSearchParams(window.location.search);
       xhr.send(JSON.stringify({
           hush_key: params.get('hush_key'),
           furniture: {
@@ -65,7 +69,6 @@ GameHelpers.Game = class {
             coordinate_y: gameObject.y
           }
       }));
-      console.log(gameObject.x, gameObject.y);
     });
     return container;
   }
@@ -78,12 +81,16 @@ GameHelpers.Game = class {
     return ground;
   }
 
-  loadPlayerAnimation(thiz) {
+  loadPlayerAnimation(thiz, player) {
     this.walkAnimation('down', this.characterSprite.down, thiz);
     this.walkAnimation('left', this.characterSprite.left, thiz);
     this.walkAnimation('right', this.characterSprite.right, thiz);
     this.walkAnimation('up',  this.characterSprite.up, thiz);
     this.walkAnimation('idle', this.characterSprite.idle, thiz);
+    let ground = this.createWalls(thiz);
+    thiz.physics.add.collider(player, ground);
+    player.smoothed = false;
+    thiz.physics.add.existing(player);
   }
 
   updatePlayerMovement(player, cursors) {
@@ -108,8 +115,8 @@ GameHelpers.Game = class {
     }
   }
 
-  debug(thiz, isActive = false){
-    if (isActive) {
+  debugOn(thiz){
+    if (this.debug) {
       thiz.input.on('pointerdown', function (pointer) {
         const worldX = pointer.worldX;
         const worldY = pointer.worldY;
@@ -118,5 +125,31 @@ GameHelpers.Game = class {
     }
   }
 };
+
+GameHelpers.config = function(debug, scene) {
+  return {
+    type: Phaser.CANVAS,
+    width: 600,
+    height: 400,
+    transparent: true,
+    parent: 'phaser-example',
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: {y: 0, x: 0},
+            debug
+        }
+    },
+    scene
+  }
+}
+
+GameHelpers.preload = function(characterSprite, thiz) {
+  thiz.load.spritesheet('player', characterSprite.spriteSheetName, { frameWidth: 32, frameHeight: 32});
+  thiz.load.spritesheet('furniture', '/images/MainTileMap.png', { frameWidth: 32, frameHeight: 32});
+  // TODO: update this to default background
+  // thiz.load.image('background', `/images/<%= @room.level %>.png`);
+  thiz.load.image('background', `/images/10.png`);
+}
 
 export default GameHelpers;

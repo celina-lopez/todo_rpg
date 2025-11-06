@@ -11,54 +11,30 @@
 <script>
   const characterSprite = <%= raw @character_sprite.to_json %>;
   const furnitureData = <%= raw @furniture.to_json %>;
-  let gameHelper;
+  const furnitureItems = <%= raw @room.furniture_items.to_json %>;
+  const debug = <%= Rails.env.development? %>; 
+  let gameHelper, game, config, cursors, player;
+
   window.onload = function() {
-    gameHelper = new window.GameHelpers.Game(characterSprite, furnitureData, <%= raw @room.furniture_items.to_json %>);
-    console.log(<%= raw @room.furniture_items.to_json %>);
+    gameHelper = new window.GameHelpers.Game(characterSprite, furnitureData, furnitureItems, debug);
+    config = window.GameHelpers.config(debug, { preload, create, update, render });
+    game = new Phaser.Game(config);
   }
 
-  var config = {
-    type: Phaser.CANVAS,
-    width: 600,
-    height: 400,
-    transparent: true,
-    parent: 'phaser-example',
-    physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: {y: 0, x: 0},
-            debug: true 
-        }
-    },
-    scene: { preload, create, update, render }
-  };
-  var game = new Phaser.Game(config);
   function preload() {
-    this.load.spritesheet('player', characterSprite.spriteSheetName, { frameWidth: 32, frameHeight: 32});
-    this.load.spritesheet('furniture', '/images/MainTileMap.png', { frameWidth: 32, frameHeight: 32});
-    this.load.image('background', `/images/<%= @room.level %>.png`);
+    GameHelpers.preload(characterSprite, this);
   }
-
-  var cursors, player;
 
   function create() {
-    this.add.image(0, 0, 'background').setOrigin(0, 0);
-    gameHelper.loadPlayerAnimation(this);
-    let ground = gameHelper.createWalls(this);
-    // gameHelper.setFurniture(this, "green_couch_forward");
-
-    player = this.add.sprite(320, 182, 'player')
-    this.physics.add.collider(player, ground);
-    player.smoothed = false;
-    this.physics.add.existing(player);
-
-    cursors = this.input.keyboard.createCursorKeys();
     gameHelper.constructWorld(this);
+    player = this.add.sprite(320, 182, 'player')
+    cursors = this.input.keyboard.createCursorKeys();
+    gameHelper.loadPlayerAnimation(this, player);
   }
 
   function update() {
     gameHelper.updatePlayerMovement(player, cursors);
-    gameHelper.debug(this);
+    gameHelper.debugOn(this);
   }
 
   function render() {

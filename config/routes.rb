@@ -12,10 +12,9 @@ Rails.application.routes.draw do
 
   resources :users, only: [ :create, :new ] do
     get :room, to: "rooms#index"
-    resource :rooms, only: [ :edit, :update ] do
-      resources :furnitures, only: [ :update ]
-    end
+    resource :rooms, only: [ :edit, :update ]
   end
+  resources :furnitures, only: [ :update ]
   resources :todos, only: [ :index ]
   resources :categories, only: [ :create, :update, :destroy ] do
     member do

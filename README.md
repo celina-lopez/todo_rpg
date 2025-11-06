@@ -8,3 +8,7 @@ https://todorpg.playboard.games/
 - `nvm use 20`
 - `yarn install`
 - `rails db:setup`
+
+todo:
+
+- [ ] move furniture

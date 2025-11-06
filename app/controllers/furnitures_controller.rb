@@ -1,6 +1,7 @@
 class FurnituresController < ApplicationController
   before_action :set_user
   before_action :set_furniture
+  skip_before_action :verify_authenticity_token
 
   def update
     @furniture.update(furniture_params)
