@@ -147,9 +147,7 @@ GameHelpers.config = function(debug, scene) {
 GameHelpers.preload = function(characterSprite, thiz) {
   thiz.load.spritesheet('player', characterSprite.spriteSheetName, { frameWidth: 32, frameHeight: 32});
   thiz.load.spritesheet('furniture', '/images/MainTileMap.png', { frameWidth: 32, frameHeight: 32});
-  // TODO: update this to default background
-  // thiz.load.image('background', `/images/<%= @room.level %>.png`);
-  thiz.load.image('background', `/images/10.png`);
+  thiz.load.image('background', `/images/0.png`);
 }
 
 export default GameHelpers;
