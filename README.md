@@ -11,5 +11,7 @@ https://todorpg.playboard.games/
 
 todo:
 
-- [ ] order for furniture
-- [ ] rewards and updating the furniture
+- [ ] notification for furniture and ability to move
+- [ ] show todos without hush_key? maybe uid the user
+- [ ] finish furniture bounding boxes
+- [ ] furniture needs to have custom bounding boxes
