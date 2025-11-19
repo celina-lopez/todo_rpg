@@ -11,4 +11,5 @@ https://todorpg.playboard.games/
 
 todo:
 
-- [ ] move furniture
+- [ ] order for furniture
+- [ ] rewards and updating the furniture

@@ -6,6 +6,7 @@ GameHelpers.Game = class {
     this.furnitureData = furnitureData;
     this.furnitureItems = furnitureItems;
     this.debug = debug;
+    this.params = new URLSearchParams(window.location.search); 
   }
 
   walkAnimation(key, frames, thiz) {
@@ -26,56 +27,66 @@ GameHelpers.Game = class {
     });
   }
 
-  setFurniture(thiz, name, id, startX = 10, startY = 10) {
+  setBoundaries(thiz, container, boundaries) {
+    const hitArea = new Phaser.Geom.Rectangle(boundaries[0], boundaries[1], boundaries[2], boundaries[3]);
+    container.setInteractive(hitArea, Phaser.Geom.Rectangle.Contains);
+    if (this.debug) {
+      thiz.input.enableDebug(container);
+    } 
+  }
+
+  enableDragging(thiz, container) {
+    thiz.input.setDraggable(container);
+    thiz.input.on('drag', (_pointer, gameObject, dragX, dragY) => {
+      gameObject.x = dragX;
+      gameObject.y = dragY;
+    });
+    thiz.input.on('dragend', (_pointer, gameObject) => {
+      var xhr = new XMLHttpRequest();
+      xhr.open("PATCH", `/furnitures/${gameObject.getData('id')}`, true);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.send(JSON.stringify({
+          hush_key: this.params.get('hush_key'),
+          furniture: {
+            coordinate_x: gameObject.x,
+            coordinate_y: gameObject.y
+          }
+      }));
+    }); 
+  }
+
+  buildFurniture(thiz, name, id, startX = 10, startY = 10) {
     let data = this.furnitureData[name],
       container = thiz.add.container(startX, startY),
       array = [],
       y = 32,
-      x = 32,
-      maxX;
-    data.forEach(layers => {
+      x = 32;
+    data.sprites.forEach(layers => {
       layers.forEach(frame => {
         var sprite = thiz.add.image(x, y, 'furniture', frame);
         array.push(sprite);
         x += 32;
       });
       y += 32;
-      maxX = x;
       x = 32;
     });
 
-    let params = new URLSearchParams(window.location.search);
     container.add(array);
-    const hitArea = new Phaser.Geom.Rectangle(32 / 2, 32 / 2 + 16, maxX - 32, data.length * 32 - 16);
-    container.setInteractive(hitArea, Phaser.Geom.Rectangle.Contains);
     container.setData('id', id);
-    thiz.input.setDraggable(container);
-    thiz.input.on('drag', (_pointer, gameObject, dragX, dragY) => {
-      console.log(dragX, dragY);
-      gameObject.x = dragX;
-      gameObject.y = dragY;
-    });
-    if (this.debug) {
-      thiz.input.enableDebug(container);
-    }
-    thiz.input.on('dragend', (_pointer, gameObject) => {
-      var xhr = new XMLHttpRequest();
-      xhr.open("PATCH", `/furnitures/${gameObject.getData('id')}`, true);
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      xhr.send(JSON.stringify({
-          hush_key: params.get('hush_key'),
-          furniture: {
-            coordinate_x: gameObject.x,
-            coordinate_y: gameObject.y
-          }
-      }));
-    });
+
+    return container;
+  }
+
+  setFurniture(thiz, name, id, startX = 10, startY = 10) {
+    let container = this.buildFurniture(thiz, name, id, startX, startY);
+    this.setBoundaries(thiz, container, this.furnitureData[name].boundaries)
+    this.enableDragging(thiz, container)
     return container;
   }
 
   createWalls(thiz){
     let ground = thiz.physics.add.staticGroup();
-    this.furnitureData.grounds.forEach((g) => {
+    this.furnitureData.grounds.sprites.forEach((g) => {
       ground.add(thiz.add.rectangle(g[0], g[1], g[2], g[3]).setOrigin(0)); 
     });
     return ground;
