@@ -1,71 +1,43 @@
- <%# TODO: allow character movement - probably phaser js  %>
  <%# TODO: Room customization   %>
-  <h2 class="text-2xl font-bold mb-2 text-center">
-    <%= @user.name %>'s room 
-  </h2>
-  <p class="text-center mb-2">
-    Level: <%= @room.level %>
-    <br/>
-    <%= @room.phrase %>
-  </p>
-  <div class="w-full justify-items-center relative">
-    <img src="/images/<%= @room.level %>.png" />
-    <img
-      src="/images/<%= @room.character %>/idle/0.png"
-      class="absolute top-[176px] left-[589px]"
-    />
-  </div>
-<script src="
-https://cdn.jsdelivr.net/npm/phaser@3.90.0/dist/phaser.min.js
-"></script>
+<h2 class="text-2xl font-bold mb-2 text-center">
+  <%= @user.name %>'s room 
+</h2>
+<p class="text-center mb-2">
+  Level: <%= @room.level %>
+  <br/>
+  <%= @room.phrase %>
+</p>
 <div id="phaser-example"></div>
 <script>
-  var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update, render: render });
-  function preload() {
-    game.load.spritesheet('player', '/images/GK_Actor_3_transparent.png', 16, 16);
+  const characterSprite = <%= raw @character_sprite.to_json %>;
+  const furnitureData = <%= raw @furniture.to_json %>;
+  const furnitureItems = <%= raw @room.furniture_items.to_json %>;
+  const debug = <%= Rails.env.development? %>; 
+  let gameHelper, game, config, cursors, player;
+
+  window.onload = function() {
+    gameHelper = new window.GameHelpers.Game(characterSprite, furnitureData, furnitureItems, debug);
+    config = window.GameHelpers.config(debug, { preload, create, update, render });
+    game = new Phaser.Game(config);
   }
 
-  var cursors;
-  var player;
-  var left;
-  var right;
+  function preload() {
+    GameHelpers.preload(characterSprite, this);
+  }
 
   function create() {
-    game.stage.backgroundColor = '#ff00ff';
-    player = game.add.sprite(48, 48, 'player', 1);
-    player.smoothed = false;
-    player.scale.set(4);
-
-    left = player.animations.add('left', [8,9], 10, true);
-    right = player.animations.add('right', [1,2], 10, true);
-    player.animations.add('up', [11,12,13], 10, true);
-    player.animations.add('down', [4,5,6], 10, true);
-
-    game.physics.enable(player, Phaser.Physics.ARCADE);
-
-    cursors = game.input.keyboard.createCursorKeys();
+    gameHelper.constructWorld(this);
+    player = this.add.sprite(320, 182, 'player')
+    cursors = this.input.keyboard.createCursorKeys();
+    gameHelper.loadPlayerAnimation(this, player);
   }
 
   function update() {
-    player.body.velocity.set(0);
+    gameHelper.updatePlayerMovement(player, cursors);
+    gameHelper.debugOn(this);
+  }
 
-    if (cursors.left.isDown){
-      player.body.velocity.x = -100;
-      player.play('left');
-    } else if (cursors.right.isDown) {
-      player.body.velocity.x = 100;
-      player.play('right');
-    } else if (cursors.up.isDown){
-      player.body.velocity.y = -100;
-      player.play('up');
-    } else if (cursors.down.isDown) {
-      player.body.velocity.y = 100;
-      player.play('down');
-    } else {
-      player.animations.stop();
-    }
-  }
   function render() {
-    game.debug.text(player.frame, 32, 32);
+    this.debug.text(player.frame, 302, 168);
   }
-  </script>
+</script>

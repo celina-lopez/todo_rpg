@@ -11,13 +11,14 @@ Rails.application.routes.draw do
   get "bedroom" => "pages#bedroom"
 
   resources :users, only: [ :create, :new ] do
-    get "room" => "rooms#index"
+    get :room, to: "rooms#index"
     resource :rooms, only: [ :edit, :update ]
   end
+  resources :furnitures, only: [ :update ]
   resources :todos, only: [ :index ]
   resources :categories, only: [ :create, :update, :destroy ] do
     member do
-      post "clear_checked" => "categories#clear_checked"
+      post :clear_checked, to: "categories#clear_checked"
     end
     resources :items, only: [ :create, :update, :destroy ]
   end

@@ -2,19 +2,20 @@
 #
 # Table name: rooms
 #
-#  id              :bigint           not null, primary key
-#  character       :integer          default("female_youth"), not null
-#  decreased_level :boolean          default(FALSE), not null
-#  level           :integer          default(0), not null
-#  theme           :integer          default("default"), not null
+#  id              :integer          not null, primary key
+#  user_id         :integer          not null
+#  theme           :integer          default("0"), not null
+#  character       :integer          default("0"), not null
+#  level           :integer          default("0"), not null
+#  decreased_level :boolean          default("false"), not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  user_id         :bigint           not null
 #
 # Indexes
 #
 #  index_rooms_on_user_id  (user_id)
 #
+
 class Room < ApplicationRecord
   belongs_to :user
   has_many :furnitures, dependent: :destroy
@@ -93,5 +94,16 @@ class Room < ApplicationRecord
   def phrase
     phrases = decreased_level? ? NEGATIVE_ROOM_PHRASES : POSITIVE_ROOM_PHRASES
     phrases[level]
+  end
+
+  def furniture_items
+    furnitures.pluck(:furniture_type, :coordinate_x, :coordinate_y, :id).map do |furniture|
+      {
+        type: furniture[0],
+        x: furniture[1],
+        y: furniture[2],
+        id: furniture[3]
+      }
+    end
   end
 end

@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_05_004930) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_30_181402) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension "pg_catalog.plpgsql"
 
   create_table "categories", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -25,10 +25,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_05_004930) do
 
   create_table "furnitures", force: :cascade do |t|
     t.bigint "room_id", null: false
-    t.integer "type", default: 0
-    t.integer "coordinate", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "furniture_type", default: 0, null: false
+    t.float "coordinate_x", default: 0.0, null: false
+    t.float "coordinate_y", default: 0.0, null: false
     t.index ["room_id"], name: "index_furnitures_on_room_id"
   end
 
