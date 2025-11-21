@@ -306,70 +306,70 @@
   "shower": { "sprites": [[910]], "boundaries": [26, 16, 14, 30] },
   "filled_bath": { "sprites": [[911], [984]], "boundaries": [16, 34, 32, 46] },
   "empty_bath": { "sprites": [[912], [985]], "boundaries": [16, 34, 32, 46] },
-  "sink3": { "sprites": [[913], [986]], "boundaries": [24, 32, 16, 22] },
+  "sink3": { "sprites": [[913], [986]], "boundaries": [24, 32, 17, 24] },
   "sink_with_mirror": {
     "sprites": [[914], [986]],
-    "boundaries": [24, 32, 16, 12]
+    "boundaries": [24, 18, 17, 38]
   },
-  "mirror": { "sprites": [[915]], "boundaries": [24, 32, 16, 12] },
+  "mirror": { "sprites": [[915]], "boundaries": [26, 18, 15, 12] },
   "right_single_couch_blue": {
     "sprites": [[868], [941]],
-    "boundaries": [24, 32, 16, 12]
+    "boundaries": [16, 20, 24, 34]
   },
   "left_single_couch_blue": {
     "sprites": [[869], [942]],
-    "boundaries": [24, 32, 16, 12]
+    "boundaries": [24, 20, 24, 34]
   },
   "couch_forward_blue": {
     "sprites": [[943, 944]],
-    "boundaries": [24, 32, 16, 12]
+    "boundaries": [16, 30, 64, 28]
   },
   "single_couch_forward_blue": {
     "sprites": [[945]],
-    "boundaries": [24, 32, 16, 12]
+    "boundaries": [18, 18, 28, 32]
   },
-  "computer_left2": { "sprites": [[946]], "boundaries": [24, 32, 16, 12] },
-  "shelf3": { "sprites": [[976], [1049]], "boundaries": [24, 32, 16, 12] },
-  "shelf4": { "sprites": [[977], [1050]], "boundaries": [24, 32, 16, 12] },
-  "yellow_lamp": { "sprites": [[978], [1051]], "boundaries": [24, 32, 16, 12] },
-  "red_lamp": { "sprites": [[979], [1052]], "boundaries": [24, 32, 16, 12] },
-  "blue_lamp": { "sprites": [[980], [1053]], "boundaries": [24, 32, 16, 12] },
-  "green_carpet": { "sprites": [[983]], "boundaries": [24, 32, 16, 12] },
+  "computer_left2": { "sprites": [[946]], "boundaries": [23, 22, 24, 26] },
+  "shelf3": { "sprites": [[976], [1049]], "boundaries": [16, 22, 32, 36] },
+  "shelf4": { "sprites": [[977], [1050]], "boundaries": [16, 22, 32, 36] },
+  "yellow_lamp": { "sprites": [[978], [1051]], "boundaries": [26, 24, 12, 33] },
+  "red_lamp": { "sprites": [[979], [1052]], "boundaries": [26, 24, 12, 33] },
+  "blue_lamp": { "sprites": [[980], [1053]], "boundaries": [26, 24, 12, 33] },
+  "green_carpet": { "sprites": [[983]], "boundaries": [18, 22, 24, 22] },
   "empty_plant4": {
     "sprites": [[987], [1127]],
-    "boundaries": [24, 32, 16, 12]
+    "boundaries": [24, 42, 16, 16]
   },
   "filled_plant4": {
     "sprites": [[988], [1127]],
-    "boundaries": [24, 32, 16, 12]
+    "boundaries": [24, 26, 16, 32]
   },
-  "table7": { "sprites": [[1014, 1015]], "boundaries": [24, 32, 16, 12] },
-  "red_plant": { "sprites": [[1054], [1127]], "boundaries": [24, 32, 16, 12] },
+  "table7": { "sprites": [[1014, 1015]], "boundaries": [16, 24, 66, 23] },
+  "red_plant": { "sprites": [[1054], [1127]], "boundaries": [24, 18, 16, 38] },
   "green_plant": {
     "sprites": [[1055], [1128]],
-    "boundaries": [24, 32, 16, 12]
+    "boundaries": [24, 18, 16, 38]
   },
-  "red_carpet": { "sprites": [[1056]], "boundaries": [24, 32, 16, 12] },
+  "red_carpet": { "sprites": [[1056]], "boundaries": [18, 22, 24, 22] },
   "empty_plant5": {
     "sprites": [[1057], [1130]],
-    "boundaries": [24, 32, 16, 12]
+    "boundaries": [24, 42, 16, 16]
   },
-  "plant8": { "sprites": [[1058], [1131]], "boundaries": [24, 32, 16, 12] },
+  "plant8": { "sprites": [[1058], [1131]], "boundaries": [24, 28, 16, 26] },
   "shoe_empty_shelf": {
     "sprites": [[1046], [1119]],
-    "boundaries": [24, 32, 16, 12]
+    "boundaries": [18, 38, 26, 18]
   },
-  "shoe_shelf": { "sprites": [[1047], [1120]], "boundaries": [24, 32, 16, 12] },
+  "shoe_shelf": { "sprites": [[1047], [1120]], "boundaries": [18, 38, 26, 18] },
   "shoe_shelf_with_plant": {
     "sprites": [[1048], [1121]],
-    "boundaries": [24, 32, 16, 12]
+    "boundaries": [20, 32, 26, 24]
   },
-  "mini_plant_blue": { "sprites": [[1122]], "boundaries": [24, 32, 16, 12] },
-  "mini_plant_red": { "sprites": [[1123]], "boundaries": [24, 32, 16, 12] },
+  "mini_plant_blue": { "sprites": [[1122]], "boundaries": [24, 22, 10, 16] },
+  "mini_plant_red": { "sprites": [[1123]], "boundaries": [24, 18, 14, 24] },
   "sword_alone": {
     "sprites": [[1124, 1125, 1126]],
-    "boundaries": [24, 32, 16, 12]
+    "boundaries": [16, 26, 94, 16]
   },
-  "flip_flops1": { "sprites": [[1132]], "boundaries": [24, 32, 16, 12] },
-  "flip_flops2": { "sprites": [[1133]], "boundaries": [24, 32, 16, 12] }
+  "flip_flops1": { "sprites": [[1132]], "boundaries": [16, 24, 28, 16] },
+  "flip_flops2": { "sprites": [[1133]], "boundaries": [16, 24, 28, 16] }
 }
