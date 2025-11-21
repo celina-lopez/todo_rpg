@@ -46,3 +46,5 @@ end
 gem "light-service"
 gem "tailwindcss-rails", "~> 2.3"
 gem "prettytodo", "~> 0.1.0"
+
+gem "noticed", "~> 2.9"

@@ -1,0 +1,5 @@
+<div>
+  <% @user.notifications.each do |notification| %>
+    <%= notification.message  %>
+  <% end %>
+</div>
