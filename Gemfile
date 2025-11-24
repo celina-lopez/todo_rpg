@@ -44,5 +44,5 @@ group :test do
 end
 
 gem "light-service"
-gem "tailwindcss-rails", "~> 2.3"
+gem "tailwindcss-rails", "~> 4.4"
 gem "prettytodo", "~> 0.1.0"
