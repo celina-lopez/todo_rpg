@@ -1,5 +1,7 @@
 var GameHelpers = {};
 
+const PLAYER_BOX = { offsetX: 8.3, width: 9.3, height: 64 };
+
 GameHelpers.Game = class {
   constructor(characterSprite, furnitureData, furnitureItems, debug = false) {
     this.characterSprite = characterSprite;
@@ -22,13 +24,16 @@ GameHelpers.Game = class {
 
   constructWorld(thiz) {
     thiz.add.image(0, 0, 'background').setOrigin(0, 0);
+    let furniture = [];
     this.furnitureItems.forEach((item) => {
-      this.setFurniture(thiz, item.type, item.id, item.x, item.y);
+      furniture.push(this.setFurniture(thiz, item.type, item.id, item.x, item.y));
     });
+    return furniture;
   }
 
   setBoundaries(thiz, container, boundaries) {
     const hitArea = new Phaser.Geom.Rectangle(boundaries[0], boundaries[1], boundaries[2], boundaries[3]);
+    container.setData('boundaries', boundaries);
     container.setInteractive(hitArea, Phaser.Geom.Rectangle.Contains);
     if (this.debug) {
       thiz.input.enableDebug(container);
@@ -84,12 +89,8 @@ GameHelpers.Game = class {
     return container;
   }
 
-  createWalls(thiz){
-    let ground = thiz.physics.add.staticGroup();
-    this.furnitureData.grounds.sprites.forEach((g) => {
-      ground.add(thiz.add.rectangle(g[0], g[1], g[2], g[3]).setOrigin(0)); 
-    });
-    return ground;
+  createWalls(){
+    this.walls = this.furnitureData.grounds.sprites.map((g) => new Phaser.Geom.Rectangle(g[0], g[1], g[2], g[3]));
   }
 
   loadPlayerAnimation(thiz, player) {
@@ -98,31 +99,63 @@ GameHelpers.Game = class {
     this.walkAnimation('right', this.characterSprite.right, thiz);
     this.walkAnimation('up',  this.characterSprite.up, thiz);
     this.walkAnimation('idle', this.characterSprite.idle, thiz);
-    let ground = this.createWalls(thiz);
-    thiz.physics.add.collider(player, ground);
+    this.createWalls();
     player.smoothed = false;
     thiz.physics.add.existing(player);
+    // match the physics (pink) box to the collision box used for blocking
+    player.body.setSize(PLAYER_BOX.width, PLAYER_BOX.height, false);
+    player.body.setOffset(PLAYER_BOX.offsetX, 0);
   }
 
-  updatePlayerMovement(player, cursors) {
+  furnitureBounds(furniture) {
+    const [bx, by, bw, bh] = furniture.getData('boundaries');
+    return new Phaser.Geom.Rectangle(furniture.x + bx, furniture.y + by, bw, bh);
+  }
+
+  // Player collision box shifted by (dx, dy). Moving up only uses the lower
+  // half of the body so the player can walk partway behind furniture.
+  playerBox(player, dx, dy, lowerHalfOnly) {
+    const b = player.getBounds();
+    const height = lowerHalfOnly ? PLAYER_BOX.height / 2 : PLAYER_BOX.height;
+    return new Phaser.Geom.Rectangle(b.x + PLAYER_BOX.offsetX + dx, b.y + (PLAYER_BOX.height - height) + dy, PLAYER_BOX.width, height);
+  }
+
+  isCollidingWithPlayer(player, furniture, dx = 0, dy = 0, lowerHalfOnly = false) {
+    const playerBox = this.playerBox(player, dx, dy, lowerHalfOnly);
+    const furnitureBox = this.furnitureBounds(furniture);
+    const isColliding = Phaser.Geom.Intersects.RectangleToRectangle(furnitureBox, playerBox);
+    const collidingPoints = Phaser.Geom.Intersects.GetRectangleToRectangle(furnitureBox, playerBox);
+    return { isColliding, collidingPoints };
+  }
+
+  wouldCollide(player, furnitures, dx, dy, lowerHalfOnly = false) {
+    const box = this.playerBox(player, dx, dy, lowerHalfOnly);
+    const hitsWall = (this.walls || []).some((w) => Phaser.Geom.Intersects.RectangleToRectangle(w, box));
+    return hitsWall || furnitures.some((f) => this.isCollidingWithPlayer(player, f, dx, dy, lowerHalfOnly).isColliding);
+  }
+
+  updatePlayerMovement(player, cursors, furnitures) {
+    const step = 1 / 60; // approximate seconds per frame
     player.body.velocity.x = 0;
     player.body.velocity.y = 0;
     if (cursors.left.isDown){
-      player.body.velocity.x = -70;
+      const vx = -70;
+      if (!this.wouldCollide(player, furnitures, vx * step, 0)) player.body.velocity.x = vx;
       if (player.anims.currentAnim.key !== 'left') player.play('left');
     } else if (cursors.right.isDown) {
-      player.body.velocity.x = 100;
+      const vx = 100;
+      if (!this.wouldCollide(player, furnitures, vx * step, 0)) player.body.velocity.x = vx;
       if (player.anims.currentAnim.key !== 'right') player.play('right');
     } else if (cursors.up.isDown){
-      player.body.velocity.y = -100;
+      const vy = -100;
+      if (!this.wouldCollide(player, furnitures, 0, vy * step, true)) player.body.velocity.y = vy;
       if (player.anims.currentAnim.key !== 'up') player.play('up');
     } else if (cursors.down.isDown) {
-      player.body.velocity.y = 100;
+      const vy = 100;
+      if (!this.wouldCollide(player, furnitures, 0, vy * step)) player.body.velocity.y = vy;
       if (player.anims.currentAnim.key !== 'down') player.play('down');
     } else {
       player.play('idle');
-      player.body.velocity.y = 0;
-      player.body.velocity.x = 0;
     }
   }
 

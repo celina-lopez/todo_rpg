@@ -15,3 +15,4 @@ todo:
 - [ ] show todos without hush_key? maybe uid the user
 - [ ] finish furniture bounding boxes
 - [ ] furniture needs to have custom bounding boxes
+- [ ] if halfway walk behind and if below, walk in front

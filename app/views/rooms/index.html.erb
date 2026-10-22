@@ -13,7 +13,7 @@
   const furnitureData = <%= raw @furniture.to_json %>;
   const furnitureItems = <%= raw @room.furniture_items.to_json %>;
   const debug = <%= Rails.env.development? %>; 
-  let gameHelper, game, config, cursors, player;
+  let gameHelper, game, config, cursors, player, furnitures;
 
   window.onload = function() {
     gameHelper = new window.GameHelpers.Game(characterSprite, furnitureData, furnitureItems, debug);
@@ -26,14 +26,15 @@
   }
 
   function create() {
-    gameHelper.constructWorld(this);
+    furnitures = gameHelper.constructWorld(this);
     player = this.add.sprite(320, 182, 'player')
     cursors = this.input.keyboard.createCursorKeys();
+    console.log(player.getBounds());
     gameHelper.loadPlayerAnimation(this, player);
   }
 
   function update() {
-    gameHelper.updatePlayerMovement(player, cursors);
+    gameHelper.updatePlayerMovement(player, cursors, furnitures);
     gameHelper.debugOn(this);
   }
 
