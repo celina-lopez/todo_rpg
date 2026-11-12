@@ -2,6 +2,9 @@
   <form action="/categories?hush_key=<%= @user.hush_key %>" method="post" data-turbo-frame="categories" class="flex items-center">
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
     <input type="text" name="category[name]" required placeholder="Take a note..." class="flex-grow text-lg focus:outline-none border-transparent rounded">
+    <label class="flex items-center gap-1 text-sm mr-2 whitespace-nowrap">
+      <input type="checkbox" name="category[is_public]" value="1"> Public
+    </label>
     <div class="flex gap-3">
       <button class="p-2" type="submit">
         <i data-lucide="check"></i>

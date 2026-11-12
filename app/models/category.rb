@@ -8,6 +8,7 @@
 #  color      :integer          default("0"), not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  is_public  :boolean          default("false"), not null
 #
 # Indexes
 #

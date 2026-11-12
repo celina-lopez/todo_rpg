@@ -1,6 +1,7 @@
 var GameHelpers = {};
 
-const PLAYER_BOX = { offsetX: 8.3, width: 9.3, height: 64 };
+const PLAYER_BOX = { offsetX: 8.3, width: 9.3, height: 64 / 3 };
+const PLAYER_BOX_OFFSET_Y = 32 - PLAYER_BOX.height; // feet, inside the 32px sprite frame
 
 GameHelpers.Game = class {
   constructor(characterSprite, furnitureData, furnitureItems, debug = false) {
@@ -78,6 +79,7 @@ GameHelpers.Game = class {
 
     container.add(array);
     container.setData('id', id);
+    container.setData('rows', data.sprites.length);
 
     return container;
   }
@@ -85,7 +87,8 @@ GameHelpers.Game = class {
   setFurniture(thiz, name, id, startX = 10, startY = 10) {
     let container = this.buildFurniture(thiz, name, id, startX, startY);
     this.setBoundaries(thiz, container, this.furnitureData[name].boundaries)
-    this.enableDragging(thiz, container)
+    // only the owner (who arrives with their hush_key) can rearrange furniture
+    if (this.params.get('hush_key')) this.enableDragging(thiz, container)
     return container;
   }
 
@@ -104,7 +107,7 @@ GameHelpers.Game = class {
     thiz.physics.add.existing(player);
     // match the physics (pink) box to the collision box used for blocking
     player.body.setSize(PLAYER_BOX.width, PLAYER_BOX.height, false);
-    player.body.setOffset(PLAYER_BOX.offsetX, 0);
+    player.body.setOffset(PLAYER_BOX.offsetX, PLAYER_BOX_OFFSET_Y);
   }
 
   furnitureBounds(furniture) {
@@ -117,7 +120,7 @@ GameHelpers.Game = class {
   playerBox(player, dx, dy, lowerHalfOnly) {
     const b = player.getBounds();
     const height = lowerHalfOnly ? PLAYER_BOX.height / 2 : PLAYER_BOX.height;
-    return new Phaser.Geom.Rectangle(b.x + PLAYER_BOX.offsetX + dx, b.y + (PLAYER_BOX.height - height) + dy, PLAYER_BOX.width, height);
+    return new Phaser.Geom.Rectangle(b.x + PLAYER_BOX.offsetX + dx, b.y + PLAYER_BOX_OFFSET_Y + (PLAYER_BOX.height - height) + dy, PLAYER_BOX.width, height);
   }
 
   isCollidingWithPlayer(player, furniture, dx = 0, dy = 0, lowerHalfOnly = false) {
@@ -129,13 +132,42 @@ GameHelpers.Game = class {
   }
 
   wouldCollide(player, furnitures, dx, dy, lowerHalfOnly = false) {
+    // look ahead at least 2px so a slow frame can't carry the player into a wall
+    const min = 2;
+    if (dx) dx = Math.sign(dx) * Math.max(Math.abs(dx), min);
+    if (dy) dy = Math.sign(dy) * Math.max(Math.abs(dy), min);
     const box = this.playerBox(player, dx, dy, lowerHalfOnly);
     const hitsWall = (this.walls || []).some((w) => Phaser.Geom.Intersects.RectangleToRectangle(w, box));
     return hitsWall || furnitures.some((f) => this.isCollidingWithPlayer(player, f, dx, dy, lowerHalfOnly).isColliding);
   }
 
+  // Walls are solid: if the player ever ends up inside one, put them back
+  // at the last position that was clear.
+  keepOutOfWalls(player) {
+    const box = this.playerBox(player, 0, 0, false);
+    if ((this.walls || []).some((w) => Phaser.Geom.Intersects.RectangleToRectangle(w, box))) {
+      if (this.lastSafe) player.body.reset(this.lastSafe.x, this.lastSafe.y);
+    } else {
+      this.lastSafe = { x: player.x, y: player.y };
+    }
+  }
+
+  // Player walks behind a furniture piece while their feet are above its
+  // horizontal midline, and in front once their feet are below it.
+  sortDepths(player, furnitures) {
+    const feetY = player.y + 16;
+    player.setDepth(1);
+    furnitures.forEach((f) => {
+      // sprite tiles are centred 32px in, so the top edge is 16px below f.y
+      const equator = f.y + 16 + (f.getData('rows') * 32) / 2;
+      f.setDepth(feetY < equator ? 2 : 0);
+    });
+  }
+
   updatePlayerMovement(player, cursors, furnitures) {
+    this.sortDepths(player, furnitures);
     const step = 1 / 60; // approximate seconds per frame
+    this.keepOutOfWalls(player);
     player.body.velocity.x = 0;
     player.body.velocity.y = 0;
     if (cursors.left.isDown){

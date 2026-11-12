@@ -1,0 +1,23 @@
+<h2 class="text-2xl font-bold mb-2 flex">
+  <%= @user.name %>'s TODOs <%= image_tag "/images/#{@user.room.character}/idle/0.png", class: "w-10 h-10 rounded-full" %>
+</h2>
+<%= link_to "Room", user_room_path(@user), class: "btn btn-primary mb-4" %>
+<% if @categories.empty? %>
+  <p>Nothing shared yet.</p>
+<% else %>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+    <% @categories.each do |category| %>
+      <div class="<%= category.color_class %> rounded-lg p-4">
+        <h2 class="text-xl font-bold mb-4"><%= category.name %></h2>
+        <div class="space-y-2">
+          <% category.items.sort_by { |i| i.completed ? 1 : 0 }.each do |item| %>
+            <div class="flex items-center gap-2">
+              <input type="checkbox" disabled <%= "checked" if item.completed %>>
+              <span class="<%= "line-through" if item.completed %>"><%= item.name %></span>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

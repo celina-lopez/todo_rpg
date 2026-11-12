@@ -10,6 +10,8 @@
 #  decreased_level :boolean          default("false"), not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  furniture_level :integer          default("0"), not null
+#  seen_level      :integer          default("0"), not null
 #
 # Indexes
 #
@@ -81,6 +83,7 @@ class Room < ApplicationRecord
     self.level = [ level + by, 12 ].min
     self.decreased_level = false
     save!
+    sync_furniture!
   end
 
   def decrement_level!(by = 1)
@@ -89,6 +92,30 @@ class Room < ApplicationRecord
     self.level = [ level - by, 0 ].max
     self.decreased_level = true
     save!
+    sync_furniture!
+  end
+
+  def sync_furniture!
+    Room::BuildFurniture.execute(room: self) if furniture_level != level
+  end
+
+  def furniture_count_for(lvl)
+    Room::BuildFurniture.data_for(lvl).length
+  end
+
+  # Returns { change: :added/:stolen, count: n } when the level moved since the
+  # player last dismissed the notice, otherwise nil.
+  def furniture_notice
+    return if seen_level == level
+
+    diff = furniture_count_for(level) - furniture_count_for(seen_level)
+    return if diff.zero?
+
+    { change: diff.positive? ? :added : :stolen, count: diff.abs }
+  end
+
+  def dismiss_furniture_notice!
+    update_columns(seen_level: level)
   end
 
   def phrase

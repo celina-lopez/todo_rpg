@@ -29,7 +29,7 @@ class CategoriesController < ApplicationController
   end
 
   def category_params
-    params.require(:category).permit(:name, :color)
+    params.require(:category).permit(:name, :color, :is_public)
   end
 
   def render_turbo_stream_response

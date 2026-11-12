@@ -7,6 +7,11 @@
   <br/>
   <%= @room.phrase %>
 </p>
+<% if @furniture_notice %>
+  <div class="w-full max-w-2xl">
+    <%= render "shared/furniture_notice", notice: @furniture_notice, user: @user, from: :room %>
+  </div>
+<% end %>
 <div id="phaser-example"></div>
 <script>
   const characterSprite = <%= raw @character_sprite.to_json %>;

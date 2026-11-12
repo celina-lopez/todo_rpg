@@ -15,7 +15,10 @@ Rails.application.routes.draw do
     resource :rooms, only: [ :edit, :update ]
   end
   resources :furnitures, only: [ :update ]
-  resources :todos, only: [ :index ]
+  resources :todos, only: [ :index ] do
+    post :dismiss_notice, on: :collection
+  end
+  get "u/:uid", to: "public_todos#show", as: :public_todos
   resources :categories, only: [ :create, :update, :destroy ] do
     member do
       post :clear_checked, to: "categories#clear_checked"

@@ -4,7 +4,12 @@
 <p class="mb-2">
   You can add categories and items to your TODO. THIS IS A SECRET LINK!
 </p>
-<%# TODO: add alerts when getting furniture added or stolen %>
+<% if @furniture_notice %>
+  <%= render "shared/furniture_notice", notice: @furniture_notice, user: @user, from: :todos %>
+<% end %>
+<p class="mb-2">
+  Public todos: <%= link_to public_todos_url(@user.uid), public_todos_path(@user.uid), class: "link" %>
+</p>
 <%= link_to "Public Room", user_room_path(@user), class: "btn btn-primary" %>
 <%= link_to "Edit Avatar", edit_user_rooms_path(@user, hush_key: params[:hush_key]), class: "btn btn-primary" %>
 <div>

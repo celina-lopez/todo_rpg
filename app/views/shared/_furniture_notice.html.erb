@@ -1,0 +1,16 @@
+<%# locals: notice, user, from (:todos or :room) %>
+<div class="alert <%= notice[:change] == :added ? "alert-success" : "alert-warning" %> my-4 flex justify-between" role="alert">
+  <span>
+    <% if notice[:change] == :added %>
+      <%= pluralize(notice[:count], "new piece") %> of furniture arrived! Drag <%= notice[:count] == 1 ? "it" : "them" %> wherever you like.
+    <% else %>
+      <%= pluralize(notice[:count], "piece") %> of furniture got stolen!
+    <% end %>
+  </span>
+  <span class="flex gap-2">
+    <% if from == :todos %>
+      <%= link_to "Move furniture", user_room_path(user, hush_key: user.hush_key), class: "btn btn-sm" %>
+    <% end %>
+    <%= button_to "Dismiss", dismiss_notice_todos_path(hush_key: user.hush_key, from: from), class: "btn btn-sm" %>
+  </span>
+</div>
